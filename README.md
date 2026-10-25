@@ -178,6 +178,10 @@ failures are deterministic. More detail:
 
 Full reasoning: [Design decisions and trade-offs](docs/design-decisions.md).
 
+## Time spent
+
+Approximately **4 hours**, within the 5-hour cap.
+
 ## Documentation
 
 Detailed documentation lives in [`docs/`](docs):
