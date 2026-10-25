@@ -133,6 +133,19 @@ failures are deterministic. More detail:
 
 **Trade-offs**
 
+- **`PaginatedTransactions` instead of `TransactionPage`.** In this codebase
+  "page" means a screen (`presentation/pages/`), so a result type called
+  `TransactionPage` reads like UI. `PaginatedTransactions` says what it is: one
+  batch of rows plus where the next batch starts.
+- **`nextOffset` instead of `nextCursor`.** In pagination, a *cursor* usually
+  means cursor (keyset) pagination: an opaque token pointing at the last item
+  returned (for example its timestamp and id), and the next page is "the rows
+  after that item". This project uses offset pagination, where the next page
+  is "the rows starting at position N", so calling a plain position a cursor
+  would be misleading. `nextOffset` works like `nextCursor` in the brief:
+  `null` means there are no more pages. The cost is that offsets can repeat
+  or skip a row if data changes between requests, which cursors avoid. The
+  sample data is fixed, so that cannot happen here.
 - **Clean Architecture for one screen.** Layers are independently
   replaceable and testable. The cost is more files and three thin use cases
   that mostly delegate to the repository.
